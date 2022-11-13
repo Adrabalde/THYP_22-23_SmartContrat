@@ -9,7 +9,7 @@ contract Election {
     bool end;
 
     constructor() public {
-        // Initilizing default values
+        // Initialisation des valeurs par défaut
         admin = msg.sender;
         candidateCount = 0;
         voterCount = 0;
@@ -18,16 +18,16 @@ contract Election {
     }
 
     function getAdmin() public view returns (address) {
-        // Returns account address used to deploy contract (i.e. admin)
+        // Renvoie l'adresse de compte utilisée pour déployer le contrat (c'est-à-dire admin)
         return admin;
     }
 
     modifier onlyAdmin() {
-        // Modifier for only admin access
+        // Modificateur pour un accès administrateur uniquement
         require(msg.sender == admin);
         _;
     }
-    // Modeling a candidate
+    // Modéliser un candidat
     struct Candidate {
         uint256 candidateId;
         string header;
@@ -36,10 +36,10 @@ contract Election {
     }
     mapping(uint256 => Candidate) public candidateDetails;
 
-    // Adding new candidates
+    // Ajout de nouveaux candidats
     function addCandidate(string memory _header, string memory _slogan)
         public
-        // Only admin can add
+        // Seul l'administrateur peut ajouter
         onlyAdmin
     {
         Candidate memory newCandidate =
@@ -53,7 +53,7 @@ contract Election {
         candidateCount += 1;
     }
 
-    // Modeling a Election Details
+    // Modélisation des détails d'une élection
     struct ElectionDetails {
         string adminName;
         string adminEmail;
@@ -71,7 +71,7 @@ contract Election {
         string memory _organizationTitle
     )
         public
-        // Only admin can add
+        // Seul l'administrateur peut ajouter
         onlyAdmin
     {
         electionDetails = ElectionDetails(
@@ -85,7 +85,7 @@ contract Election {
         end = false;
     }
 
-    // Get Elections details
+    // Obtenir les détails des élections
     function getAdminName() public view returns (string memory) {
         return electionDetails.adminName;
     }
@@ -106,19 +106,19 @@ contract Election {
         return electionDetails.organizationTitle;
     }
 
-    // Get candidates count
+    // Obtenir le nombre total des candidats
     function getTotalCandidate() public view returns (uint256) {
-        // Returns total number of candidates
+        // Renvoie le nombre total de candidats
         return candidateCount;
     }
 
-    // Get voters count
+    // Compter les électeurs
     function getTotalVoter() public view returns (uint256) {
-        // Returns total number of voters
+        // Renvoie le nombre total des élécteurs
         return voterCount;
     }
 
-    // Modeling a voter
+    // Modélisation d'un électeur
     struct Voter {
         address voterAddress;
         string name;
@@ -130,7 +130,7 @@ contract Election {
     address[] public voters; // Array of address to store address of voters
     mapping(address => Voter) public voterDetails;
 
-    // Request to be added as voter
+    // Demander à être ajouté comme électeur
     function registerAsVoter(string memory _name, string memory _phone) public {
         Voter memory newVoter =
             Voter({
@@ -146,16 +146,16 @@ contract Election {
         voterCount += 1;
     }
 
-    // Verify voter
+    // Vérifier l'électeur
     function verifyVoter(bool _verifedStatus, address voterAddress)
         public
-        // Only admin can verify
+        // Seul l'administrateur peut vérifier
         onlyAdmin
     {
         voterDetails[voterAddress].isVerified = _verifedStatus;
     }
 
-    // Vote
+    // Voter
     function vote(uint256 candidateId) public {
         require(voterDetails[msg.sender].hasVoted == false);
         require(voterDetails[msg.sender].isVerified == true);
@@ -165,13 +165,13 @@ contract Election {
         voterDetails[msg.sender].hasVoted = true;
     }
 
-    // End election
+    // Fin des élections
     function endElection() public onlyAdmin {
         end = true;
         start = false;
     }
 
-    // Get election start and end values
+    // Obtenir les valeurs de début et de fin des élections
     function getStart() public view returns (bool) {
         return start;
     }
