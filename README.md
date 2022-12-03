@@ -7,6 +7,8 @@ Système de vote électronique basé sur la blockchain
 Je subdivise ce projet en deux :
 
 1- Première partie eVote, est la partie du déploiement du smart contract sans l'interface utilisateur ;
+
+
 2- Deuxième partie où je les mis sur un autre repo où vous pourrez cloner ce repo là, faire les instructions suivantes et vous verrez le système de vote en ligne avec l'interface utilisateur au complet.
 Merci de cloner ce repository et exécuter ces instructions suivantes :
 
